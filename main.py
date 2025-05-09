@@ -1,14 +1,25 @@
 import string
 import random
 import sys
-from PyQt5.QtWidgets import QApplication, QMainWindow
+from PyQt5.QtWidgets import QApplication, QMainWindow, QCheckBox, QLabel, QWidget, QVBoxLayout, QHBoxLayout, QGridLayout
+
 
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Password_Generator")
         self.setGeometry(700,300,500,500)
+        self.uppercase = QCheckBox("Uppercase", self)
+        self.lowercase = QCheckBox("Lowercase", self)
+        self.numbers = QCheckBox("Numbers", self)
+        self.symbols = QCheckBox("Symbols", self)
+        self.initUI()
 
+    def initUI(self):
+        self.uppercase.setGeometry(10,50,500,100)
+        self.lowercase.setGeometry(100,50,500,100)
+        self.numbers.setGeometry(200,50,500,100)
+        self.symbols.setGeometry(300,50,500,100)
 
 def main():
     app = QApplication(sys.argv)
