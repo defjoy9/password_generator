@@ -1,7 +1,7 @@
 import string
 import random
 import sys
-from PyQt5.QtWidgets import QApplication, QMainWindow, QCheckBox
+from PyQt5.QtWidgets import QApplication, QMainWindow, QCheckBox, QPushButton, QLineEdit
 from PyQt5.QtCore import Qt
 
 class MainWindow(QMainWindow):
@@ -9,6 +9,8 @@ class MainWindow(QMainWindow):
         super().__init__()
         self.setWindowTitle("Password_Generator")
         self.setGeometry(700,300,500,500)
+        self.line_edit = QLineEdit(self)
+        self.button = QPushButton("Copy Password",self)
         self.uppercase = QCheckBox("Uppercase", self)
         self.lowercase = QCheckBox("Lowercase", self)
         self.numbers = QCheckBox("Numbers", self)
@@ -16,26 +18,34 @@ class MainWindow(QMainWindow):
         self.initUI()
 
     def initUI(self):
-        self.uppercase.setGeometry(10,50,500,100)
-        self.lowercase.setGeometry(100,50,500,100)
-        self.numbers.setGeometry(200,50,500,100)
-        self.symbols.setGeometry(300,50,500,100)
+        self.line_edit.setGeometry(50,20,400,50)
+        self.button.setGeometry(200,150,100,40)
+        self.uppercase.setGeometry(60,50,500,100)
+        self.lowercase.setGeometry(160,50,500,100)
+        self.numbers.setGeometry(260,50,500,100)
+        self.symbols.setGeometry(360,50,500,100)
 
         self.uppercase.stateChanged.connect(self.checkbox_changed)
         self.lowercase.stateChanged.connect(self.checkbox_changed)
         self.numbers.stateChanged.connect(self.checkbox_changed)
         self.symbols.stateChanged.connect(self.checkbox_changed)
+
     def checkbox_changed(self, state):
         sender = self.sender()  # Gets the checkbox that sent the signal
-
+        all_chars = ""
         if sender == self.uppercase:
-            print("Uppercase changed:", "Checked" if state == Qt.Checked else "Unchecked")
+            if state == Qt.Checked:
+                all_chars += string.ascii_uppercase 
         elif sender == self.lowercase:
-            print("Lowercase changed:", "Checked" if state == Qt.Checked else "Unchecked")
+            if state == Qt.Checked:
+                all_chars += string.ascii_lowercase 
         elif sender == self.numbers:
-            print("Numbers changed:", "Checked" if state == Qt.Checked else "Unchecked")
+            if state == Qt.Checked:
+                all_chars += string.digits 
         elif sender == self.symbols:
-            print("Symbols changed:", "Checked" if state == Qt.Checked else "Unchecked")
+            if state == Qt.Checked:
+                all_chars += string.punctuation 
+
 def main():
     app = QApplication(sys.argv)
     window = MainWindow()
@@ -47,31 +57,31 @@ if __name__ == "__main__":
     main()
 
 
-class Password_Generator:
-    def __init__(self, length=12, uppercase=True, lowercase=True, number=True, symbols=True):
-        self.length = length
-        self.uppercase = uppercase
-        self.lowercase = lowercase
-        self.number = number
-        self.symbols = symbols
+# class Password_Generator:
+#     def __init__(self, length=12, uppercase=True, lowercase=True, number=True, symbols=True):
+#         self.length = length
+#         self.uppercase = uppercase
+#         self.lowercase = lowercase
+#         self.number = number
+#         self.symbols = symbols
 
-    def generate(self):
-        all_chars = ""
+#     def generate(self):
+#         all_chars = ""
 
-        if self.uppercase:
-            all_chars += string.ascii_uppercase
-        if self.lowercase:
-            all_chars += string.ascii_lowercase
-        if self.number:
-            all_chars += string.digits
-        if self.symbols:
-            all_chars += string.punctuation
+#         if self.uppercase:
+#             all_chars += string.ascii_uppercase
+#         if self.lowercase:
+#             all_chars += string.ascii_lowercase
+#         if self.number:
+#             all_chars += string.digits
+#         if self.symbols:
+#             all_chars += string.punctuation
 
-        password = ''.join(random.choice(all_chars) for _ in range(self.length))
-        return password
+#         password = ''.join(random.choice(all_chars) for _ in range(self.length))
+#         return password
 
-def main():
-    password_gen = Password_Generator(length=16, uppercase=True, lowercase=True, number=True, symbols=True)
-    new_password = password_gen.generate()
+# def main():
+#     password_gen = Password_Generator(length=16, uppercase=True, lowercase=True, number=True, symbols=True)
+#     new_password = password_gen.generate()
 
-    print(new_password)
+#     print(new_password)
