@@ -10,7 +10,6 @@ class MainWindow(QMainWindow):
         self.setWindowTitle("Password_Generator")
         self.setGeometry(700,300,500,500)
         self.line_edit = QLineEdit(self)
-        self.button = QPushButton("Generate",self)
         self.uppercase = QCheckBox("Uppercase", self)
         self.lowercase = QCheckBox("Lowercase", self)
         self.numbers = QCheckBox("Numbers", self)
@@ -19,13 +18,11 @@ class MainWindow(QMainWindow):
 
     def initUI(self):
         self.line_edit.setGeometry(50,20,400,50)
-        self.button.setGeometry(200,150,100,40)
         self.uppercase.setGeometry(60,50,500,100)
         self.lowercase.setGeometry(160,50,500,100)
         self.numbers.setGeometry(260,50,500,100)
         self.symbols.setGeometry(360,50,500,100)
 
-        self.button.clicked.connect(self.generate_password)
         self.uppercase.stateChanged.connect(self.generate_password)
         self.lowercase.stateChanged.connect(self.generate_password)
         self.numbers.stateChanged.connect(self.generate_password)
@@ -50,6 +47,7 @@ class MainWindow(QMainWindow):
 
         password = ''.join(random.choice(all_chars) for _ in range(length))
         self.line_edit.setText(password)
+
 def main():
     app = QApplication(sys.argv)
     window = MainWindow()
